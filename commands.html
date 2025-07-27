@@ -1,135 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Commands • Council of Nations</title>
-  <link rel="icon" href="https://i.ibb.co/Z67Ts3fC/318ccbad-df6e-42b8-a406-ba8262cf74ac.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bot Commands • Council of Nations</title>
   <link rel="stylesheet" href="/style.css" />
   <script src="/script.js" defer></script>
-  <style>
-    .category-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-
-    .category-buttons button {
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 8px;
-      background: var(--color-primary);
-      color: var(--color-highlight);
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .category-buttons button:hover,
-    .category-buttons button.active {
-      background: var(--color-bg-alt);
-      transform: scale(1.05);
-    }
-
-    .command-section {
-      display: none;
-      text-align: left;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 10px;
-      padding: 1rem 2rem;
-      box-shadow: var(--shadow);
-      margin-top: 1rem;
-    }
-
-    .command-section.active {
-      display: block;
-    }
-
-    .command-section ul {
-      padding-left: 1.2rem;
-    }
-
-    .command-section li {
-      margin: 0.5rem 0;
-    }
-
-    code {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-    }
-  </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="nav-brand">🌍 CoN Bot</div>
-    <button class="nav-toggle" id="navToggle">☰</button>
-    <nav class="nav-menu" id="navMenu">
-      <a href="/">Home</a>
-      <a href="/commands.html">Commands</a>
-      <a href="/invite.html">Invite</a>
-      <a href="https://discord.gg/yuWK8hhsHH" target="_blank">Discord</a>
-      <button id="themeToggle" class="theme-toggle">🌙</button>
-    </nav>
-  </header>
-
-  <main class="wrapper">
+  <div class="wrapper">
     <div class="content">
-      <h1 class="title">📜 CoN Bot Commands</h1>
-      <p class="subtitle">Click a category below to explore available commands.</p>
-
-      <div class="category-buttons">
-        <button class="category-btn active" data-category="nation">🗺️ Nation</button>
-        <button class="category-btn" data-category="general">📁 General</button>
-        <button class="category-btn" data-category="admin">🛠️ Admin</button>
-        <!-- Add more buttons as needed -->
-      </div>
-
-      <!-- Nation Commands -->
-      <div class="command-section active" id="nation">
-        <h2>🗺️ Nation</h2>
-        <ul>
-          <li><code>!con nation_create</code> – Start your own nation</li>
-        </ul>
-      </div>
-
-      <!-- General Commands -->
-      <div class="command-section" id="general">
-        <h2>📁 General</h2>
-        <ul>
-          <li><code>!con help</code> – Show all available commands</li>
-        </ul>
-      </div>
-
-      <!-- Admin Commands -->
-      <div class="command-section" id="admin">
-        <h2>🛠️ Admin</h2>
-        <ul>
-          <li><code>!con announce</code> – Send a broadcast to all users</li>
-        </ul>
-      </div>
-
-      <footer class="footer">
-        <p>Made with ❤️ by the CoN Team</p>
-      </footer>
+      <h1>📜 Bot Commands</h1>
+      <div id="category-buttons" class="btn-group"></div>
+      <div id="commands-container" class="command-list"></div>
     </div>
-  </main>
+  </div>
 
   <script>
-    document.querySelectorAll('.category-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+    const categoryButtons = document.getElementById("category-buttons");
+    const commandsContainer = document.getElementById("commands-container");
+    let commandData = {};
 
-        const target = button.getAttribute('data-category');
-        document.querySelectorAll('.command-section').forEach(section => {
-          section.classList.remove('active');
-        });
-        document.getElementById(target).classList.add('active');
+    async function loadCommands() {
+      try {
+        const res = await fetch("/commands.json");
+        commandData = await res.json();
+        renderCategories();
+        const firstCategory = Object.keys(commandData)[0];
+        renderCommands(firstCategory);
+      } catch (err) {
+        commandsContainer.innerHTML = "<p>⚠️ Failed to load commands.</p>";
+      }
+    }
+
+    function renderCategories() {
+      categoryButtons.innerHTML = "";
+      for (const category in commandData) {
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.textContent = category;
+        btn.onclick = () => renderCommands(category);
+        categoryButtons.appendChild(btn);
+      }
+    }
+
+    function renderCommands(category) {
+      commandsContainer.innerHTML = "";
+      const commands = commandData[category];
+      if (!commands || commands.length === 0) {
+        commandsContainer.innerHTML = "<p>No commands in this category.</p>";
+        return;
+      }
+
+      commands.forEach(cmd => {
+        const cmdBox = document.createElement("div");
+        cmdBox.className = "command-box";
+        cmdBox.innerHTML = `
+          <h3>!con ${cmd.name}</h3>
+          <p>${cmd.description}</p>
+        `;
+        commandsContainer.appendChild(cmdBox);
       });
-    });
+    }
+
+    loadCommands();
   </script>
 </body>
 </html>
