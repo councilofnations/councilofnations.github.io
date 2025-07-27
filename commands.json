@@ -1,0 +1,18 @@
+{
+  "Nation": [
+    {
+      "name": "nation_create",
+      "description": "No description"
+    }
+  ],
+  "Uncategorized": [
+    {
+      "name": "help",
+      "description": "Shows this message"
+    },
+    {
+      "name": "dump_commands",
+      "description": "No description"
+    }
+  ]
+}
