@@ -2,17 +2,13 @@
   "Nation": [
     {
       "name": "nation_create",
-      "description": "No description"
+      "description": "Start your own nation"
     }
   ],
   "Uncategorized": [
     {
       "name": "help",
-      "description": "Shows this message"
-    },
-    {
-      "name": "dump_commands",
-      "description": "No description"
+      "description": "Show all available commands"
     }
   ]
 }
