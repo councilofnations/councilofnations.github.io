@@ -4,7 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bot Commands • Council of Nations</title>
-  <link rel="stylesheet" href="/style.css" />
+  <style>
+  .command-list {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.command-box {
+  background: var(--color-bg-alt, #1a1a1a);
+  color: var(--color-highlight, #fff);
+  border-radius: var(--radius, 12px);
+  padding: 1.2rem;
+  box-shadow: var(--shadow, 0 0 10px rgba(0, 0, 0, 0.2));
+  transition: transform 0.2s ease;
+}
+
+.command-box:hover {
+  transform: translateY(-5px);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  background: var(--color-primary, #0077ff);
+  color: var(--color-highlight, #fff);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background: #005cd6;
+}
+</style>
   <script src="/script.js" defer></script>
 </head>
 <body>
