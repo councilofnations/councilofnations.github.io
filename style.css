@@ -160,7 +160,73 @@ body.dark .content {
   animation: spin 1s linear infinite;
   margin: 2rem auto;
 }
+/* Wrapper for command section */
+.command-list {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
 
+/* Individual command card */
+.command-box {
+  background: var(--color-bg-alt, #202020);
+  color: var(--color-highlight, #ffffff);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.command-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+}
+
+.command-box h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary, #4b9eff);
+}
+
+.command-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+/* Buttons for categories */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: var(--color-primary, #4b9eff);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: #397cd8;
+}
+
+/* Responsive wrapper */
+.wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+}
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
