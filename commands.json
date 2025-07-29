@@ -1,8 +1,26 @@
 {
+  "City": [
+    {
+      "name": "cities",
+      "description": "Check your cities"
+    },
+    {
+      "name": "city_buildings",
+      "description": "Get Info about city buildings"
+    }
+  ],
   "Nation": [
     {
       "name": "nation_create",
       "description": "Start your own nation"
+    },
+    {
+      "name": "nation_info",
+      "description": "Get other user's nation info"
+    },
+    {
+      "name": "me",
+      "description": "Get your nation info and update your nation info"
     }
   ],
   "Uncategorized": [
