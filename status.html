@@ -2,33 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Bot Status</title>
+  <title>Council of Nations Bot Status</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-    #status { font-size: 2rem; font-weight: bold; }
-    .online { color: green; }
-    .offline { color: red; }
-    .reconnecting { color: orange; }
+    /* Gradient background */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+    }
+
+    /* Card container */
+    .status-card {
+      background: rgba(0,0,0,0.6);
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      text-align: center;
+      width: 350px;
+      transition: transform 0.3s ease;
+    }
+
+    .status-card:hover {
+      transform: translateY(-5px);
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+
+    #bot-status {
+      font-size: 2.2rem;
+      font-weight: bold;
+      padding: 20px;
+      border-radius: 15px;
+      transition: background 0.3s, color 0.3s;
+      display: inline-block;
+      min-width: 180px;
+    }
+
+    /* Status colors */
+    .online {
+      color: #0f0;
+      background: rgba(0,255,0,0.1);
+      box-shadow: 0 0 15px rgba(0,255,0,0.5);
+    }
+    .offline {
+      color: #f00;
+      background: rgba(255,0,0,0.1);
+      box-shadow: 0 0 15px rgba(255,0,0,0.5);
+    }
+    .reconnecting {
+      color: #ffa500;
+      background: rgba(255,165,0,0.1);
+      box-shadow: 0 0 15px rgba(255,165,0,0.5);
+    }
+
+    /* Loading animation */
+    .loader {
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      margin-left: 10px;
+      animation: spin 1s linear infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
   </style>
 </head>
 <body>
-  <h1>Council of Nations Bot Status</h1>
-  <div id="bot-status">Checking bot status...</div>
+  <div class="status-card">
+    <h1>Council of Nations Bot Status</h1>
+    <div id="bot-status" class="reconnecting">
+      Checking bot status <span class="loader"></span>
+    </div>
+  </div>
 
 <script>
 async function checkBotStatus() {
+  const statusEl = document.getElementById("bot-status");
   try {
     let res = await fetch("https://shivcharan.pythonanywhere.com/status");
     let data = await res.json();
-    document.getElementById("bot-status").textContent = 
-      data.online ? "🟢 Bot is Online" : "🔴 Bot is Offline";
+
+    if(data.online) {
+      statusEl.textContent = "🟢 Bot is Online";
+      statusEl.className = "online";
+    } else {
+      statusEl.textContent = "🔴 Bot is Offline";
+      statusEl.className = "offline";
+    }
   } catch (err) {
-    document.getElementById("bot-status").textContent = "🔴 Bot is Offline";
+    statusEl.textContent = "🔴 Bot is Offline";
+    statusEl.className = "offline";
   }
 }
 
-// Check every 10 seconds
+// Initial check
 checkBotStatus();
+
+// Update every 10 seconds
 setInterval(checkBotStatus, 10000);
 </script>
 </body>
