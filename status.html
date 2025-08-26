@@ -18,7 +18,7 @@
 <script>
 async function checkBotStatus() {
   try {
-    let res = await fetch("http://141.11.167.247:6198/status");
+    let res = await fetch("https://shivcharan.pythonanywhere.com/status");
     let data = await res.json();
     document.getElementById("bot-status").textContent = 
       data.online ? "🟢 Bot is Online" : "🔴 Bot is Offline";
