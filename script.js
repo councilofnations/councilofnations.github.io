@@ -1,21 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const themeToggle = document.getElementById("themeToggle");
   const navToggle = document.getElementById("navToggle");
   const navMenu = document.getElementById("navMenu");
+  const themeToggle = document.getElementById('themeToggle');
 
-  // Load saved theme
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    if (themeToggle) themeToggle.textContent = "☀️";
-  }
+  // Theme toggle
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
 
-  // Toggle dark mode
-  themeToggle?.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    const isDark = document.body.classList.contains("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-    themeToggle.textContent = isDark ? "☀️" : "🌙";
+    // Change the button icon
+    themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '☀️';
   });
+
+  // Set initial mode
+  document.body.classList.add('light-mode'); // or 'dark-mode' by default
 
   // Toggle mobile nav
   navToggle?.addEventListener("click", () => {
