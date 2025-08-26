@@ -12,23 +12,43 @@
   --color-highlight: #000000;
   --color-primary: var(--primary);
 }
-
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(-45deg, #1f1c2c, #928dab, #2c3e50, #6a3093);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  transition: background 0.5s ease, color 0.5s ease;
+}
 body.dark {
   --color-bg-alt: #1e1e1e;
   --color-highlight: #ffffff;
 }
 
-body {
-  margin: 0;
-  font-family: 'Lexend', sans-serif;
-  transition: background 0.3s, color 0.3s;
-  background: var(--bg-light);
-  color: var(--text-light);
+body.light-mode {
+  color: #111;
+  background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #fbc2eb, #a6c1ee);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
 }
 
-body.dark {
-  background: var(--bg-dark);
-  color: var(--text-dark);
+/* Dark mode gradient */
+body.dark-mode {
+  color: #fff;
+  background: linear-gradient(-45deg, #1f1c2c, #928dab, #2c3e50, #6a3093);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
 }
 
 /* NAVBAR */
