@@ -1,35 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.getElementById("themeToggle");
   const navToggle = document.getElementById("navToggle");
   const navMenu = document.getElementById("navMenu");
-  const themeToggle = document.getElementById('themeToggle');
 
-  // Theme toggle
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    document.body.classList.toggle('light-mode');
+  // ================= Dark/Light Mode =================
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    document.body.classList.add(savedTheme);
+    themeToggle.textContent = savedTheme === "dark-mode" ? "🌙" : "☀️";
+  } else {
+    document.body.classList.add("light-mode");
+    themeToggle.textContent = "☀️";
+  }
 
-    // Change the button icon
-    themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '☀️';
+  themeToggle.addEventListener("click", () => {
+    if (document.body.classList.contains("dark-mode")) {
+      document.body.classList.remove("dark-mode");
+      document.body.classList.add("light-mode");
+      themeToggle.textContent = "☀️";
+      localStorage.setItem("theme", "light-mode");
+    } else {
+      document.body.classList.remove("light-mode");
+      document.body.classList.add("dark-mode");
+      themeToggle.textContent = "🌙";
+      localStorage.setItem("theme", "dark-mode");
+    }
   });
 
-  // Set initial mode
-  document.body.classList.add('light-mode'); // or 'dark-mode' by default
-
-  // Toggle mobile nav
+  // ================= Mobile Nav Toggle =================
   navToggle?.addEventListener("click", () => {
     navMenu.classList.toggle("show");
   });
 
-  // Spinner for /invite.html
-  if (window.location.pathname === "/invite.html") {
+  // ================= Invite Page Loader =================
+  if (window.location.pathname.includes("/invite.html")) {
     document.body.innerHTML = `<div class="wrapper"><div class="loader"></div></div>`;
     setTimeout(() => {
-      window.location.href = "https://discord.com/oauth2/authorize?client_id=1394521818093846548&permissions=1689934541355088&integration_type=0&scope=bot";
+      window.location.href =
+        "https://discord.com/oauth2/authorize?client_id=1394521818093846548&permissions=1689934541355088&scope=bot";
     }, 1500);
-    return; // Stop executing rest of script
+    return;
   }
 
-  // ============ Bot Commands Page Logic ============
+  // ================= Commands Page Logic =================
   const categoryButtons = document.getElementById("category-buttons");
   const commandsContainer = document.getElementById("commands-container");
   let commandData = {};
@@ -76,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Only load commands if we're on the commands page
   if (document.getElementById("commands-container")) {
     loadCommands();
   }
